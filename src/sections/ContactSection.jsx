@@ -259,7 +259,7 @@ export default function ContactSection() {
             </div>
             <div className="info-item">
               <div className="info-label">Phone</div>
-              <div className="info-value">+977 98XXXXXXXX</div>
+              <div className="info-value">+977 9800956956</div>
             </div>
             <div className="info-item">
               <div className="info-label">Location</div>

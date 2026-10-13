@@ -2,151 +2,144 @@ import { useState, useEffect, useRef } from "react";
 import resumePDF from "../../public/CV.pdf";
 
 export default function HeroSection() {
-  //  Typewriter State 
-const roles = ["Aspiring Frontend Developer","SEO Enthusiast",
-];
+  const roles = ["Full Stack Developer", "Frontend Developer @ Bardali Creation", "React Specialist", "UI Engineer"];
   const [roleIndex, setRoleIndex] = useState(0);
   const [displayText, setDisplayText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
   const [charIndex, setCharIndex] = useState(0);
 
-  //  Terminal Ref (for 3D tilt effect) 
   const terminalRef = useRef(null);
 
-  //  Typewriter Effect 
   useEffect(() => {
     const current = roles[roleIndex];
     let timeout;
-
     if (!isDeleting && charIndex < current.length) {
-      // Typing forward
       timeout = setTimeout(() => {
         setDisplayText(current.slice(0, charIndex + 1));
         setCharIndex((c) => c + 1);
-      }, 100);
+      }, 75);
     } else if (!isDeleting && charIndex === current.length) {
-      // Pause before deleting
-      timeout = setTimeout(() => setIsDeleting(true), 1400);
+      timeout = setTimeout(() => setIsDeleting(true), 1500);
     } else if (isDeleting && charIndex > 0) {
-      // Deleting backward
       timeout = setTimeout(() => {
         setDisplayText(current.slice(0, charIndex - 1));
         setCharIndex((c) => c - 1);
-      }, 55);
+      }, 38);
     } else if (isDeleting && charIndex === 0) {
-      // Move to next role
       setIsDeleting(false);
       setRoleIndex((i) => (i + 1) % roles.length);
     }
-
     return () => clearTimeout(timeout);
   }, [charIndex, isDeleting, roleIndex]);
 
-  //  3D Tilt Handlers 
   const handleMouseMove = (e) => {
     const el = terminalRef.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    const rotateX = ((y - rect.height / 2) / rect.height) * -12;
-    const rotateY = ((x - rect.width / 2) / rect.width) * 12;
-    el.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`;
+    const rotateX = ((y - rect.height / 2) / rect.height) * -7;
+    const rotateY = ((x - rect.width / 2) / rect.width) * 7;
+    el.style.transform = `perspective(1100px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
   };
 
   const handleMouseLeave = () => {
     const el = terminalRef.current;
-    if (el)
-      el.style.transform = `perspective(900px) rotateX(0deg) rotateY(0deg) scale(1)`;
+    if (el) el.style.transform = `perspective(1100px) rotateX(0deg) rotateY(0deg)`;
   };
 
-  //  Helpers 
   const handleSocialClick = (url) => window.open(url, "_blank");
-
   const handleCollaborate = () => {
     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   };
 
-  //  Nav Links 
-  const navLinks = [
-    { label: "Home", href: "#home" },
-    { label: "About", href: "#about" },
-    { label: "Skills", href: "#skills" },
-    { label: "Projects", href: "#projects" },
-    { label: "Contact", href: "#contact" },
-  ];
-
-  //  Terminal Code Lines 
   const codeLines = [
     {
       num: "01",
       tokens: [
-        { text: "const ", color: "#93c5fd" },
-        { text: "developer", color: "#bfdbfe" },
-        { text: " = ", color: "#93c5fd" },
-        { text: "{", color: "#ffffff" },
+        { text: "const ", color: "#c792ea" },
+        { text: "developer", color: "#82aaff" },
+        { text: " = ", color: "#89ddff" },
+        { text: "{", color: "#e8eef7" },
       ],
     },
     {
       num: "02",
       tokens: [
-        { text: "  name", color: "#bfdbfe" },
-        { text: ": ", color: "#93c5fd" },
-        { text: "'Pratha Bhattarai'", color: "#a5f3fc" },
-        { text: ",", color: "#93c5fd" },
+        { text: "  name", color: "#82aaff" },
+        { text: ": ", color: "#89ddff" },
+        { text: "'Pratha Bhattarai'", color: "#c3e88d" },
+        { text: ",", color: "#89ddff" },
       ],
     },
     {
       num: "03",
       tokens: [
-        { text: "  focus", color: "#bfdbfe" },
-        { text: ": ", color: "#93c5fd" },
-        { text: "'Aspiring Frontend Developer'", color: "#a5f3fc" },
-        { text: ",", color: "#93c5fd" },
+        { text: "  role", color: "#82aaff" },
+        { text: ": ", color: "#89ddff" },
+        { text: "'Full Stack Developer'", color: "#c3e88d" },
+        { text: ",", color: "#89ddff" },
       ],
     },
     {
       num: "04",
       tokens: [
-        { text: "  skills", color: "#bfdbfe" },
-        { text: ": ", color: "#93c5fd" },
-        { text: "['UI/UX', 'React', 'Node.js', 'MySQL']", color: "#a5f3fc" },
-        { text: ",", color: "#93c5fd" },
+        { text: "  company", color: "#82aaff" },
+        { text: ": ", color: "#89ddff" },
+        { text: "'Bardali Creation Pvt. Ltd.'", color: "#c3e88d" },
+        { text: ",", color: "#89ddff" },
       ],
     },
     {
       num: "05",
       tokens: [
-        { text: "  passionate", color: "#bfdbfe" },
-        { text: ": ", color: "#93c5fd" },
-        { text: "true", color: "#86efac" },
-        { text: ",", color: "#93c5fd" },
+        { text: "  job", color: "#82aaff" },
+        { text: ": ", color: "#89ddff" },
+        { text: "'Part-time Frontend Dev'", color: "#c3e88d" },
+        { text: ",", color: "#89ddff" },
       ],
     },
     {
       num: "06",
       tokens: [
-        { text: "  motto", color: "#bfdbfe" },
-        { text: ": ", color: "#93c5fd" },
-        { text: '"Build with Purpose"', color: "#fde68a" },
+        { text: "  stack", color: "#82aaff" },
+        { text: ": ", color: "#89ddff" },
+        { text: "['React', 'Node.js', 'MySQL']", color: "#c3e88d" },
+        { text: ",", color: "#89ddff" },
       ],
     },
     {
       num: "07",
-      tokens: [{ text: "};", color: "#ffffff" }],
+      tokens: [
+        { text: "  openToWork", color: "#82aaff" },
+        { text: ": ", color: "#89ddff" },
+        { text: "true", color: "#f78c6c" },
+        { text: ",", color: "#89ddff" },
+      ],
     },
     {
       num: "08",
       tokens: [
-        { text: "developer", color: "#bfdbfe" },
-        { text: ".", color: "#93c5fd" },
-        { text: "showcase", color: "#c4b5fd" },
-        { text: "();", color: "#ffffff" },
+        { text: "  motto", color: "#82aaff" },
+        { text: ": ", color: "#89ddff" },
+        { text: '"ship clean code"', color: "#ffcb6b" },
+      ],
+    },
+    {
+      num: "09",
+      tokens: [{ text: "};", color: "#e8eef7" }],
+    },
+    {
+      num: "10",
+      tokens: [
+        { text: "developer", color: "#82aaff" },
+        { text: ".", color: "#89ddff" },
+        { text: "hire", color: "#00e5a0" },
+        { text: "();", color: "#e8eef7" },
       ],
     },
   ];
 
-  // ─── Social Links ────────────────────────────────────────────────────────────
   const socials = [
     {
       title: "GitHub",
@@ -175,380 +168,265 @@ const roles = ["Aspiring Frontend Developer","SEO Enthusiast",
         </svg>
       ),
     },
-   {
-    title: "Email",
-    url: "https://mail.google.com/mail/?view=cm&fs=1&to=prathabhattarai2@gmail.com",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="currentColor">
-        <path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z" />
-      </svg>
-    ),
-  },
-
+    {
+      title: "Email",
+      url: "https://mail.google.com/mail/?view=cm&fs=1&to=prathabhattarai2@gmail.com",
+      icon: (
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z" />
+        </svg>
+      ),
+    },
   ];
 
-  // ───────────────────────────────────────────────────────────────────────────
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600;700;800;900&display=swap');
-
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-        /* ── Page Wrapper ── */
-        .hero-root {
-          min-height: 100vh;
-          background: #f8fafc;
-          display: flex;
-          flex-direction: column;
-          font-family: 'Inter', sans-serif;
-        }
-
-        /* ── Navbar ── */
-        .navbar {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 18px 48px;
-          background: #ffffff;
-          border-bottom: 1px solid #e5e7eb;
+        .hero {
           position: relative;
-          z-index: 10;
-        }
-        .logo {
-          font-size: 22px;
-          font-weight: 800;
-          color: #0f172a;
-        }
-        .nav-links {
+          min-height: 100svh;
           display: flex;
-          gap: 40px;
-          list-style: none;
+          align-items: center;
+          overflow: hidden;
+          padding-top: 68px;
+          isolation: isolate;
         }
-        .nav-links a {
-          color: #0f172a;
-          text-decoration: none;
-          font-size: 15px;
-          font-weight: 600;
-          transition: color 0.2s;
+        .hero-bg-grid {
+          position: absolute; inset: 0; z-index: -2;
+          background-image:
+            linear-gradient(rgba(148,163,184,.06) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(148,163,184,.06) 1px, transparent 1px);
+          background-size: 44px 44px;
+          mask-image: radial-gradient(ellipse 85% 68% at 50% 32%, black 35%, transparent 78%);
+          -webkit-mask-image: radial-gradient(ellipse 85% 68% at 50% 32%, black 35%, transparent 78%);
         }
-        .nav-links a:hover { color: #4f6ef7; }
-
-        /* ── Two-Column Hero Body ── */
-        .hero-body {
+        .hero-glow {
+          position: absolute; z-index: -1;
+          border-radius: 50%;
+          filter: blur(90px);
+          opacity: .5;
+          pointer-events: none;
+        }
+        .hero-glow.g1 { width: 480px; height: 480px; left: -140px; top: 8%; background: radial-gradient(circle, rgba(0,229,160,.18), transparent 65%); }
+        .hero-glow.g2 { width: 560px; height: 560px; right: -160px; top: -80px; background: radial-gradient(circle, rgba(34,211,238,.14), transparent 65%); }
+        .hero-inner {
+          width: 100%;
+          max-width: 1180px;
+          margin: 0 auto;
+          padding: 56px 32px 72px;
           display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 48px;
+          grid-template-columns: 1.08fr .92fr;
+          gap: 56px;
           align-items: center;
-          padding: 64px 48px;
-          flex: 1;
         }
-
-        /* ── Left Column ── */
-        .hero-left {
-          display: flex;
-          flex-direction: column;
-          gap: 28px;
-        }
-
-        /* ── Heading ── */
-        .intro-text {
-          display: flex;
-          flex-direction: column;
-          line-height: 1.05;
-        }
-        .greeting {
-          font-size: 80px;
-          font-weight: 900;
-          color: #0f172a;
-        }
-        .name-line {
-          font-size: 80px;
-          font-weight: 900;
-          color: #0f172a;
-        }
-        .name-highlight { color: #4f6ef7; }
-
-        /* ── Typewriter Role Text ── */
-        .role-line {
-          font-size: 40px;
-          font-weight: 800;
-          color: #4f6ef7;
-          line-height: 1.3;
-          margin-top: 8px;
-          min-height: 54px;
-        }
-        .cursor {
-          display: inline-block;
-          width: 3px;
-          height: 0.85em;
-          background: #4f6ef7;
-          margin-left: 2px;
-          vertical-align: text-bottom;
-          animation: blink 0.85s step-end infinite;
-        }
-        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-
-        /* ── Social Buttons ── */
-        .socials { display: flex; gap: 10px; }
-        .social-btn {
-          width: 44px;
-          height: 44px;
-          border-radius: 10px;
-          background: #ffffff;
-          border: 1.5px solid #e2e8f0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: #64748b;
-          cursor: pointer;
-          transition: all 0.2s;
-        }
-        .social-btn:hover {
-          border-color: #4f6ef7;
-          color: #4f6ef7;
-          background: #f0f4ff;
-        }
-        .social-btn svg {
-          width: 18px;
-          height: 18px;
-          display: block;
-          fill: currentColor;
-        }
-
-        /* ── CTA Buttons ── */
-        .cta-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
-
-        .btn-primary {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          background: #4f6ef7;
-          color: #ffffff;
-          font-weight: 700;
-          font-size: 13px;
-          letter-spacing: 0.08em;
-          text-transform: uppercase;
-          padding: 14px 24px;
-          border-radius: 10px;
-          border: none;
-          cursor: pointer;
-          transition: background 0.2s;
-          font-family: 'Inter', sans-serif;
-        }
-        .btn-primary:hover { background: #3b56d4; }
-        .btn-primary svg { width: 17px; height: 17px; fill: currentColor; }
-
-        .btn-ghost {
+        .status-pill {
           display: inline-flex;
           align-items: center;
-          gap: 8px;
-          background: #ffffff;
-          color: #0f172a;
-          font-weight: 700;
-          font-size: 13px;
-          letter-spacing: 0.08em;
-          text-transform: uppercase;
-          padding: 14px 24px;
-          border-radius: 10px;
-          border: 1.5px solid #e2e8f0;
-          cursor: pointer;
-          transition: all 0.2s;
-          font-family: 'Inter', sans-serif;
-          text-decoration: none;
+          gap: 9px;
+          font-family: var(--mono);
+          font-size: 12.5px;
+          color: #a7f3d0;
+          background: rgba(0,229,160,.08);
+          border: 1px solid rgba(0,229,160,.22);
+          padding: 8px 14px;
+          border-radius: 999px;
+          margin-bottom: 22px;
         }
-        .btn-ghost:hover { border-color: #4f6ef7; color: #4f6ef7; }
-        .btn-ghost svg { width: 16px; height: 16px; fill: currentColor; }
+        .pulse-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 0 rgba(0,229,160,.6); animation: pulse 2s infinite; }
+        @keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(0,229,160,.55)} 70%{box-shadow:0 0 0 9px rgba(0,229,160,0)} 100%{box-shadow:0 0 0 0 rgba(0,229,160,0)} }
+        .hero-path { font-family: var(--mono); font-size: 13.5px; color: #5b6b86; margin-bottom: 14px; }
+        .hero-path span { color: var(--accent); }
+        .hero-h1 {
+          font-size: clamp(2.7rem, 5.4vw, 4.3rem);
+          line-height: 1.02;
+          letter-spacing: -0.04em;
+          font-weight: 700;
+        }
+        .hero-h1 .grad {
+          background: linear-gradient(92deg, #00e5a0 0%, #22d3ee 55%, #a78bfa 100%);
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+        }
+        .type-row {
+          display: flex; align-items: center; gap: 10px;
+          margin-top: 18px;
+          font-family: var(--mono);
+          font-size: clamp(1rem, 2vw, 1.25rem);
+          color: #c6d0e0;
+          min-height: 34px;
+        }
+        .type-row .prompt { color: var(--accent); font-weight: 700; }
+        .type-cursor { display:inline-block; width: 9px; height: 1.2em; background: var(--accent); margin-left: 4px; vertical-align: text-bottom; animation: blink .9s step-end infinite; border-radius: 1px; box-shadow: 0 0 12px rgba(0,229,160,.8); }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+        .hero-sub { margin-top: 18px; color: #8b98af; font-size: 1.04rem; line-height: 1.7; max-width: 520px; }
+        .hero-sub code { font-family: var(--mono); font-size: .86em; color: #a7f3d0; background: rgba(0,229,160,.1); border: 1px solid rgba(0,229,160,.18); padding: 2px 7px; border-radius: 6px; }
+        .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; align-items: center; }
+        .btn-solid {
+          display: inline-flex; align-items: center; gap: 9px;
+          background: linear-gradient(135deg, #00e5a0, #00c489);
+          color: #04120c;
+          font-weight: 700; font-size: 14px;
+          padding: 13px 22px; border-radius: 11px; border: none; cursor: pointer;
+          text-decoration: none;
+          box-shadow: 0 8px 28px rgba(0,229,160,.28);
+          transition: all .2s;
+        }
+        .btn-solid:hover { transform: translateY(-2px); box-shadow: 0 12px 34px rgba(0,229,160,.38); }
+        .btn-ghost-dark {
+          display: inline-flex; align-items: center; gap: 9px;
+          background: rgba(255,255,255,.03);
+          color: #e8eef7; font-weight: 600; font-size: 14px;
+          padding: 13px 22px; border-radius: 11px;
+          border: 1px solid rgba(148,163,184,.22);
+          cursor: pointer; text-decoration: none;
+          transition: all .2s;
+        }
+        .btn-ghost-dark:hover { border-color: rgba(0,229,160,.5); color: var(--accent); background: rgba(0,229,160,.07); transform: translateY(-2px); }
+        .hero-meta { display: flex; gap: 26px; margin-top: 30px; padding-top: 24px; border-top: 1px solid rgba(148,163,184,.12); }
+        .meta-item b { display:block; font-size: 1.35rem; color: #fff; letter-spacing:-.02em; }
+        .meta-item span { font-family: var(--mono); font-size: 11.5px; color: #5b6b86; text-transform: uppercase; letter-spacing: .08em; }
+        .hero-socials { display:flex; gap:10px; margin-top: 22px; }
+        .icon-btn {
+          width: 42px; height: 42px; border-radius: 11px;
+          display:flex; align-items:center; justify-content:center;
+          background: rgba(255,255,255,.03);
+          border: 1px solid rgba(148,163,184,.16);
+          color: #8b98af; cursor: pointer; transition: all .2s;
+        }
+        .icon-btn:hover { color: var(--accent); border-color: rgba(0,229,160,.45); background: rgba(0,229,160,.08); transform: translateY(-2px); }
+        .icon-btn svg { width: 18px; height: 18px; fill: currentColor; display:block; }
 
-        /* ── Terminal Card ── */
+        /* terminal */
+        .term-wrap { position: relative; }
+        .term-glow { position:absolute; inset: 18px -18px -18px 18px; background: linear-gradient(135deg, rgba(0,229,160,.22), rgba(34,211,238,.18)); filter: blur(46px); border-radius: 24px; z-index:-1; opacity:.7; }
         .terminal {
-          border-radius: 18px;
+          border-radius: 16px;
           overflow: hidden;
-          background: linear-gradient(145deg, #0f1f4a 0%, #1a3a8f 60%, #2563eb 100%);
-          box-shadow: 0 24px 60px rgba(37, 99, 235, 0.22), 0 0 0 1px rgba(255,255,255,0.07);
-          transition: transform 0.18s ease;
+          background: rgba(9,13,25,.92);
+          border: 1px solid rgba(148,163,184,.16);
+          box-shadow: 0 30px 80px rgba(0,0,0,.55);
+          backdrop-filter: blur(12px);
+          transition: transform .2s ease;
           will-change: transform;
         }
+        .terminal-bar { display:flex; align-items:center; justify-content:space-between; padding: 13px 16px; background: rgba(255,255,255,.025); border-bottom: 1px solid rgba(148,163,184,.12); }
+        .traffic { display:flex; gap:7px; align-items:center; }
+        .tl { width: 11px; height: 11px; border-radius:50%; }
+        .filename { display:flex; align-items:center; gap:8px; font-family: var(--mono); font-size:12px; color:#8b98af; background: rgba(255,255,255,.04); border:1px solid rgba(148,163,184,.12); padding:5px 12px; border-radius:7px; }
+        .term-tabs { display:flex; gap:2px; padding: 0 16px; border-bottom: 1px solid rgba(148,163,184,.1); background: rgba(0,0,0,.18); }
+        .term-tab { font-family: var(--mono); font-size:12px; color:#5b6b86; padding:10px 14px; border-bottom:2px solid transparent; }
+        .term-tab.active { color: #e8eef7; border-bottom-color: var(--accent); background: rgba(0,229,160,.05); }
+        .code-body { padding: 22px 20px 18px; font-family: var(--mono); font-size: 13.5px; line-height: 2.05; overflow-x:auto; }
+        .code-line { display:flex; gap:18px; white-space: pre; }
+        .ln { color: #334155; min-width: 20px; text-align:right; user-select:none; font-size:12px; line-height:2.35; }
+        .term-footer { display:flex; align-items:center; justify-content:space-between; padding: 11px 16px; border-top:1px solid rgba(148,163,184,.1); font-family:var(--mono); font-size:11.5px; color:#5b6b86; background: rgba(0,0,0,.22); }
+        .term-footer .ok { color: var(--accent); display:flex; align-items:center; gap:6px; }
+        .scroll-hint { display:flex; justify-content:center; margin-top: 6px; padding-bottom: 26px; color:#3c4a64; }
+        .scroll-hint span { width:24px; height:38px; border:1.5px solid #26334f; border-radius:14px; display:flex; justify-content:center; padding-top:7px; }
+        .scroll-hint i { width:3px; height:8px; border-radius:3px; background: var(--accent); display:block; animation: wheel 1.8s infinite; }
+        @keyframes wheel { 0%{transform:translateY(0);opacity:1} 60%{transform:translateY(10px);opacity:0} 100%{transform:translateY(0);opacity:0} }
 
-        /* ── Terminal Top Bar ── */
-        .terminal-bar {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 12px 18px;
-          background: rgba(0, 0, 0, 0.15);
-          border-bottom: 1px solid rgba(255,255,255,0.07);
-        }
-        .traffic-lights { display: flex; gap: 7px; }
-        .tl { width: 12px; height: 12px; border-radius: 50%; }
-        .tl-r { background: #ef4444; }
-        .tl-y { background: #f59e0b; }
-        .tl-g { background: #22c55e; }
-        .filename {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          font-size: 12px;
-          color: rgba(255,255,255,0.85);
-          font-family: 'Fira Code', monospace;
-        }
-        .filename-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.7); }
-
-        /* ── Terminal Code Body ── */
-        .code-body {
-          padding: 28px 28px 34px 28px;
-          font-family: 'Fira Code', monospace;
-          font-size: 14px;
-          line-height: 2.1;
-        }
-        .code-line { display: flex; gap: 22px; }
-        .ln {
-          color: rgba(255,255,255,0.35);
-          min-width: 18px;
-          text-align: right;
-          user-select: none;
-          font-size: 13px;
-        }
-        .tokens { display: flex; white-space: pre; }
-
-        /* ── Responsive ── */
-        @media (max-width: 1100px) {
-          .hero-body { grid-template-columns: 1fr; gap: 32px; padding: 40px 24px; }
-          .greeting, .name-line { font-size: 60px; }
-          .role-line { font-size: 32px; }
-        }
-        @media (max-width: 768px) {
-          .navbar { padding: 14px 16px; }
-          .nav-links { gap: 16px; }
-          .nav-links a { font-size: 13px; }
-          .greeting, .name-line { font-size: 44px; }
-          .role-line { font-size: 24px; min-height: 36px; }
-          .code-body { padding: 18px 14px 20px; font-size: 12px; line-height: 1.75; }
-          .code-line { gap: 10px; }
+        @media (max-width: 1020px) {
+          .hero-inner { grid-template-columns: 1fr; gap: 40px; padding: 40px 20px 56px; }
+          .term-glow { display:none; }
         }
       `}</style>
 
-      <div className="hero-root" id="home">
-        {/* ── Navbar ─────────────────────────────────────────────────── */}
-        <nav className="navbar">
-          <span className="logo">Pratha</span>
-          <ul className="nav-links">
-            {navLinks.map((link) => (
-              <li key={link.label}>
-                <a href={link.href}>{link.label}</a>
-              </li>
-            ))}
-          </ul>
-        </nav>
+      <section className="hero" id="home">
+        <div className="hero-bg-grid" />
+        <div className="hero-glow g1" />
+        <div className="hero-glow g2" />
 
-        {/*  Hero Body  */}
-        <div className="hero-body">
-          {/* LEFT: Text Content */}
-          <div className="hero-left">
-            {/* Heading: Hi, I'm Pratha */}
-            <div className="intro-text">
-              <span className="greeting">Hi,</span>
-              <span className="name-line">
-                I'm <span className="name-highlight">Pratha</span>
-              </span>
-              {/* Animated role under the name */}
-              <span className="role-line">
-                {displayText}
-                <span className="cursor" />
-              </span>
+        <div className="hero-inner">
+          <div>
+            <div className="hero-path">
+              ~/portfolio <span>—</span> whoami
+            </div>
+            <h1 className="hero-h1">
+              Hi, I&apos;m <span className="grad">Pratha Bhattarai</span>
+            </h1>
+            <div className="type-row">
+              <span className="prompt">▸</span>
+              <span>{displayText}</span>
+              <span className="type-cursor" />
+            </div>
+            <p className="hero-sub">
+              Full Stack Developer crafting fast, accessible web experiences with{" "}
+              <code>React</code> <code>Node.js</code> and <code>MySQL</code>. Currently working
+              part-time as a <code>Frontend Developer</code> at Bardali Creation Pvt. Ltd.
+            </p>
+
+            <div className="hero-actions">
+              <button className="btn-solid" onClick={handleCollaborate}>
+                Let&apos;s Collaborate
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </button>
+              <a className="btn-ghost-dark" href={resumePDF} download="Pratha_Bhattarai_Resume.pdf" target="_blank" rel="noopener noreferrer">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                </svg>
+                ./get_resume.sh
+              </a>
             </div>
 
-            {/* Social Media Icons */}
-            <div className="socials">
+            <div className="hero-meta">
+              <div className="meta-item"><b>2+</b><span>projects shipped</span></div>
+              <div className="meta-item"><b>2 yrs</b><span>learning & building</span></div>
+              <div className="meta-item"><b>100%</b><span>commitment</span></div>
+            </div>
+
+            <div className="hero-socials">
               {socials.map((s) => (
-                <button
-                  key={s.title}
-                  className="social-btn"
-                  title={s.title}
-                  onClick={() => handleSocialClick(s.url)}
-                >
+                <button key={s.title} className="icon-btn" title={s.title} onClick={() => handleSocialClick(s.url)}>
                   {s.icon}
                 </button>
               ))}
             </div>
-
-            {/* CTA Buttons */}
-            <div className="cta-row">
-              {/* Scrolls to Contact section */}
-              <button className="btn-primary" onClick={handleCollaborate}>
-                Let's Collaborate
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
-                </svg>
-              </button>
-
-              {/* Downloads resume PDF */}
-              <a
-                className="btn-ghost"
-                href={resumePDF}
-                download="Pratha_Bhattarai_Resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Get Resume
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
-                </svg>
-              </a>
-            </div>
           </div>
 
-          {/* RIGHT: Terminal Card with 3D Tilt */}
-          <div
-            className="terminal"
-            ref={terminalRef}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-          >
-            {/* Top bar with traffic lights */}
-            <div className="terminal-bar">
-              <div className="traffic-lights">
-                <span className="tl tl-r" />
-                <span className="tl tl-y" />
-                <span className="tl tl-g" />
-              </div>
-              <div className="filename">
-                <span className="filename-dot" />
-                Portfolio.ts
-              </div>
-            </div>
-
-            {/* Code lines */}
-            <div className="code-body">
-              {codeLines.map((line, i) => (
-                <div className="code-line" key={i}>
-                  <span className="ln">{line.num}</span>
-                  <span className="tokens">
-                    {line.tokens.map((t, j) => (
-                      <span
-                        key={j}
-                        style={{ color: t.color, whiteSpace: "pre" }}
-                      >
-                        {t.text}
-                      </span>
-                    ))}
-                  </span>
+          <div className="term-wrap">
+            <div className="term-glow" />
+            <div className="terminal" ref={terminalRef} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
+              <div className="terminal-bar">
+                <div className="traffic">
+                  <span className="tl" style={{ background: "#ff5f57" }} />
+                  <span className="tl" style={{ background: "#febc2e" }} />
+                  <span className="tl" style={{ background: "#28c840" }} />
                 </div>
-              ))}
+                <div className="filename">
+                  <span style={{ width: 7, height: 7, borderRadius: "50%", background: "var(--accent)" }} />
+                  developer.js
+                </div>
+                <span style={{ fontFamily: "var(--mono)", fontSize: 11, color: "#3c4a64" }}>UTF-8</span>
+              </div>
+              <div className="term-tabs">
+                <span className="term-tab active">developer.js</span>
+                <span className="term-tab">skills.json</span>
+                <span className="term-tab">contact.sh</span>
+              </div>
+              <div className="code-body">
+                {codeLines.map((line, i) => (
+                  <div className="code-line" key={i}>
+                    <span className="ln">{line.num}</span>
+                    <span>
+                      {line.tokens.map((t, j) => (
+                        <span key={j} style={{ color: t.color }}>{t.text}</span>
+                      ))}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <div className="term-footer">
+                <span>main* ⏷ 0 ⚠ 0 ✓</span>
+                <span className="ok"><span style={{ width: 7, height: 7, borderRadius: "50%", background: "currentColor" }} /> build: passing</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 }

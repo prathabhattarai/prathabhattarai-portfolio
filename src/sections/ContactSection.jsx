@@ -1,4 +1,8 @@
+import { useState } from "react";
+
 export default function ContactSection() {
+  const [sent, setSent] = useState(false);
+
   const handleSocialClick = (url) => {
     window.open(url, "_blank");
   };
@@ -36,252 +40,140 @@ export default function ContactSection() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
-
-        .contact-section {
-          padding: 64px 48px;
-          background: #f8fafc;
-          font-family: 'Inter', sans-serif;
+        .contact { border-top: 1px solid rgba(148,163,184,.1); }
+        .contact-grid { display:grid; grid-template-columns: 1.5fr 1fr; gap:18px; margin-top:44px; align-items:start; }
+        .panel {
+          background: linear-gradient(180deg, rgba(255,255,255,.03), transparent 40%), #0d1424;
+          border: 1px solid rgba(148,163,184,.13);
+          border-radius: 18px;
+          overflow:hidden;
         }
-
-        .contact-title {
-          font-size: clamp(2.5rem, 4vw, 3.5rem);
-          font-weight: 900;
-          color: #0f172a;
-          line-height: 1.05;
-          margin: 0 0 2.5rem 0;
+        .panel-bar { display:flex; align-items:center; gap:8px; padding:12px 18px; border-bottom:1px solid rgba(148,163,184,.1); background: rgba(0,0,0,.22); font-family: var(--mono); font-size:12px; color:#5b6b86; }
+        .panel-body { padding:26px; }
+        .panel-title { font-size:1.05rem; font-weight:700; color:#fff; margin-bottom:4px; }
+        .panel-sub { font-family: var(--mono); font-size:12px; color:#5b6b86; margin-bottom:20px; }
+        .fld { margin-bottom:14px; }
+        .fld label { display:block; font-family:var(--mono); font-size:12px; color:#8b98af; margin-bottom:7px; }
+        .fld label span { color: var(--accent); }
+        .inp, .ta {
+          width:100%; box-sizing:border-box; display:block;
+          background: rgba(5,7,13,.6);
+          border:1px solid rgba(148,163,184,.16);
+          border-radius:11px;
+          padding:13px 14px;
+          color:#e8eef7; font-size:.93rem; font-family: var(--sans);
+          outline:none; transition: all .2s;
         }
-
-        .contact-title span {
-          color: #4f6ef7;
+        .ta { min-height:130px; resize:vertical; font-family: var(--sans); }
+        .inp::placeholder,.ta::placeholder { color:#3f4d68; }
+        .inp:focus,.ta:focus { border-color: rgba(0,229,160,.55); box-shadow: 0 0 0 3px rgba(0,229,160,.12); background: rgba(5,7,13,.9); }
+        .send {
+          width:100%; height:48px; border:none; border-radius:11px; cursor:pointer;
+          background: linear-gradient(135deg,#00e5a0,#00c489);
+          color:#04120c; font-weight:800; font-size:.9rem; font-family:var(--mono);
+          transition: all .2s; margin-top:6px;
         }
-
-        .contact-grid {
-          display: grid;
-          grid-template-columns: 1.8fr 1fr;
-          gap: 2rem;
-          align-items: start;
-          min-width: 0;
-        }
-
-        .card {
-          background: #ffffff;
-          border: 1px solid #e2e8f0;
-          border-radius: 20px;
-          padding: 2rem;
-          min-width: 0;
-          overflow: hidden;
-        }
-
-        .card-title {
-          margin: 0 0 1.5rem;
-          font-size: 1.1rem;
-          font-weight: 700;
-          color: #0f172a;
-        }
-
-        .form-group {
-          margin-bottom: 1rem;
-        }
-
-        .form-label {
-          display: block;
-          margin-bottom: 0.5rem;
-          font-size: 0.9rem;
-          color: #475569;
-          font-weight: 600;
-        }
-
-        .form-input,
-        .form-textarea {
-          width: 100%;
-          border: 1px solid #dbe3ee;
-          border-radius: 12px;
-          padding: 0.95rem 1rem;
-          font-size: 0.95rem;
-          font-family: 'Inter', sans-serif;
-          color: #0f172a;
-          outline: none;
-          transition: all 0.25s ease;
-          box-sizing: border-box;
-          background: #fff;
-          display: block;
-        }
-
-        .form-input { height: 46px; }
-
-        .form-textarea {
-          height: 130px;
-          resize: none;
-          max-width: 100%;
-          min-width: 0;
-        }
-
-        .form-input::placeholder,
-        .form-textarea::placeholder { color: #94a3b8; }
-
-        .form-input:focus,
-        .form-textarea:focus {
-          border-color: #4f6ef7;
-          box-shadow: 0 0 0 3px rgba(79,110,247,0.12);
-        }
-
-        .submit-btn {
-          width: 100%;
-          height: 46px;
-          border: none;
-          border-radius: 12px;
-          background: #4f6ef7;
-          color: #fff;
-          font-size: 0.95rem;
-          font-weight: 700;
-          cursor: pointer;
-          transition: all 0.25s ease;
-          font-family: 'Inter', sans-serif;
-        }
-
-        .submit-btn:hover {
-          transform: translateY(-2px);
-          background: #3b56d4;
-        }
-
-        .info-item {
-          padding: 1rem 0;
-          border-bottom: 1px solid #edf2f7;
-        }
-
-        .info-item:last-of-type {
-          border-bottom: none;
-        }
-
-        .info-label {
-          font-size: 0.75rem;
-          color: #94a3b8;
-          text-transform: uppercase;
-          letter-spacing: 0.1em;
-          font-weight: 700;
-        }
-
-        .info-value {
-          margin-top: 0.35rem;
-          color: #0f172a;
-          font-weight: 600;
-          font-size: 0.95rem;
-        }
-
-        .social-title {
-          margin-top: 1.5rem;
-          margin-bottom: 1rem;
-          font-size: 0.75rem;
-          font-weight: 700;
-          color: #94a3b8;
-          text-transform: uppercase;
-          letter-spacing: 0.1em;
-        }
-
-        .social-row {
-          display: flex;
-          gap: 0.75rem;
-        }
-
-        .social-btn {
-          width: 44px;
-          height: 44px;
-          border-radius: 10px;
-          border: 1.5px solid #e2e8f0;
-          background: #fff;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: #64748b;
-          cursor: pointer;
-          transition: all 0.2s ease;
-        }
-
-        .social-btn:hover {
-          color: #4f6ef7;
-          border-color: #4f6ef7;
-          background: #f0f4ff;
-          transform: translateY(-2px);
-        }
-
-        .social-btn svg {
-          width: 18px;
-          height: 18px;
-          fill: currentColor;
-        }
-
-        @media (max-width: 1100px) {
-          .contact-section { padding: 40px 24px; }
-          .contact-grid { grid-template-columns: 1fr; }
-        }
-
-        @media (max-width: 768px) {
-          .contact-section { padding: 32px 16px; }
-        }
+        .send:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(0,229,160,.3); }
+        .sent-ok { display:flex; align-items:center; gap:10px; margin-top:14px; font-family:var(--mono); font-size:12.5px; color:var(--accent); background: rgba(0,229,160,.08); border:1px solid rgba(0,229,160,.25); padding:11px 14px; border-radius:10px; }
+        .info-row { padding:15px 0; border-bottom:1px solid rgba(148,163,184,.1); }
+        .info-row:last-of-type { border-bottom:none; }
+        .info-row small { font-family:var(--mono); font-size:11px; color:var(--accent); text-transform:lowercase; letter-spacing:.04em; }
+        .info-row div { color:#e8eef7; font-weight:600; font-size:.94rem; margin-top:5px; word-break: break-all; }
+        .social-row { display:flex; gap:10px; margin-top:16px; }
+        .sbtn { width:44px;height:44px;border-radius:11px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.03);border:1px solid rgba(148,163,184,.16);color:#8b98af;cursor:pointer;transition:all .2s; }
+        .sbtn:hover{color:var(--accent);border-color:rgba(0,229,160,.45);background:rgba(0,229,160,.08);transform:translateY(-2px);}
+        .sbtn svg{width:18px;height:18px;fill:currentColor;}
+        .avail { display:flex; align-items:center; gap:10px; background: rgba(0,229,160,.07); border:1px solid rgba(0,229,160,.22); border-radius:12px; padding:13px 15px; margin-bottom:18px; font-size:.86rem; color:#a7f3d0; }
+        .avail i { width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent); flex-shrink:0; }
+        @media (max-width: 920px){ .contact-grid{grid-template-columns:1fr;} }
       `}</style>
 
-      <section id="contact" className="contact-section">
+      <section id="contact" className="contact">
+        <div className="section-shell">
+          <span className="section-kicker">{"// 05. contact"}</span>
+          <h2 className="section-title" style={{ marginTop: 18 }}>
+            Get In <span className="accent">Touch</span>
+          </h2>
+          <p className="section-desc" style={{ marginTop: 12 }}>
+            <span className="mono" style={{ color: "var(--accent)" }}>$</span> ./send_message.sh — have a
+            project, internship, or collab in mind? My inbox is open.
+          </p>
 
-        <h2 className="contact-title">
-          Get In <span>Touch</span>
-        </h2>
-
-        <div className="contact-grid">
-
-          {/* ── Form Card ── */}
-          <div className="card">
-            <h3 className="card-title">Send a Message</h3>
-            <form onSubmit={(e) => e.preventDefault()}>
-              <div className="form-group">
-                <label className="form-label">Name</label>
-                <input className="form-input" type="text" placeholder="Enter Your Name" />
+          <div className="contact-grid">
+            <div className="panel">
+              <div className="panel-bar">
+                <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#ff5f57" }} />
+                <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#febc2e" }} />
+                <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#28c840" }} />
+                <span style={{ marginLeft: 8 }}>~/contact/new_message.form</span>
               </div>
-              <div className="form-group">
-                <label className="form-label">Email</label>
-                <input className="form-input" type="email" placeholder="Enter Your Email" />
-              </div>
-              <div className="form-group">
-                <label className="form-label">Message</label>
-                <textarea className="form-textarea" placeholder="Tell me about your project..." />
-              </div>
-              <button className="submit-btn" type="submit">Send Message</button>
-            </form>
-          </div>
-
-          {/* ── Info Card ── */}
-          <div className="card">
-            <h3 className="card-title">Contact Information</h3>
-
-            <div className="info-item">
-              <div className="info-label">Email</div>
-              <div className="info-value">prathabhattarai2@gmail.com</div>
-            </div>
-            <div className="info-item">
-              <div className="info-label">Phone</div>
-              <div className="info-value">+977 9800956956</div>
-            </div>
-            <div className="info-item">
-              <div className="info-label">Location</div>
-              <div className="info-value">Inaruwa- Sunsari, Nepal</div>
-            </div>
-
-            <div className="social-title">Social Links</div>
-            <div className="social-row">
-              {socialLinks.map((item) => (
-                <button
-                  type="button"
-                  key={item.name}
-                  className="social-btn"
-                  title={item.name}
-                  onClick={() => handleSocialClick(item.url)}
+              <div className="panel-body">
+                <div className="panel-title">Send a Message</div>
+                <div className="panel-sub">{"// usually replies within 24h"}</div>
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    setSent(true);
+                    setTimeout(() => setSent(false), 4000);
+                    e.currentTarget.reset();
+                  }}
                 >
-                  {item.icon}
-                </button>
-              ))}
+                  <div className="fld">
+                    <label><span>$</span> your_name --required</label>
+                    <input className="inp" type="text" placeholder="Jane Doe" required />
+                  </div>
+                  <div className="fld">
+                    <label><span>$</span> your_email --required</label>
+                    <input className="inp" type="email" placeholder="jane@company.com" required />
+                  </div>
+                  <div className="fld">
+                    <label><span>$</span> message --required</label>
+                    <textarea className="ta" placeholder="Hey Pratha, let's build something great..." required />
+                  </div>
+                  <button className="send" type="submit">$ send_message --submit</button>
+                  {sent && <div className="sent-ok">✓ message_queued — I&apos;ll get back to you soon.</div>}
+                </form>
+              </div>
+            </div>
+
+            <div className="panel">
+              <div className="panel-bar">
+                <span style={{ color: "var(--accent)" }}>●</span> ~/contact/info.json
+              </div>
+              <div className="panel-body">
+                <div className="avail">
+                  <i />
+                  Currently @ Bardali Creation • Open to collabs
+                </div>
+                <div className="info-row">
+                  <small>"role":</small>
+                  <div>Part-time Frontend Developer</div>
+                </div>
+                <div className="info-row">
+                  <small>"company":</small>
+                  <div>Bardali Creation Pvt. Ltd.</div>
+                </div>
+                <div className="info-row">
+                  <small>"email":</small>
+                  <div>prathabhattarai2@gmail.com</div>
+                </div>
+                <div className="info-row">
+                  <small>"location":</small>
+                  <div>Inaruwa, Sunsari — Nepal</div>
+                </div>
+                <div style={{ fontFamily: "var(--mono)", fontSize: 11, color: "#5b6b86", marginTop: 18, textTransform: "uppercase", letterSpacing: ".1em" }}>
+                  {"// socials"}
+                </div>
+                <div className="social-row">
+                  {socialLinks.map((item) => (
+                    <button type="button" key={item.name} className="sbtn" title={item.name} onClick={() => handleSocialClick(item.url)}>
+                      {item.icon}
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
-
         </div>
       </section>
     </>

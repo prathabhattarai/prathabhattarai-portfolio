@@ -4,39 +4,36 @@ import profileImage from "../assets/images/Profile.jpeg";
 export default function AboutSection() {
   const photoCardRef = useRef(null);
 
-  const stats = [
-    { value: "2+", label: "Academic Projects" },
-    { value: "100%", label: "Dedication" },
-    { value: "2", label: "Years Learning" },
-  ];
-
   const highlights = [
     {
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-          <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+          <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+          <path d="M6 12v5c3 3 9 3 12 0v-5" />
         </svg>
       ),
+      title: "education",
       text: "BSc (Hons) Computing — Sundarharicha",
     },
     {
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <rect x="2" y="3" width="20" height="14" rx="2"/>
-          <path d="M8 21h8M12 17v4"/>
+          <rect x="2" y="3" width="20" height="14" rx="2" />
+          <path d="M8 21h8M12 17v4" />
         </svg>
       ),
-      text: " Aspiring Frontend Developer & SEO Learner",
+      title: "current_role",
+      text: "Part-time Frontend Developer @ Bardali Creation Pvt. Ltd.",
     },
     {
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
-          <circle cx="12" cy="9" r="2.5"/>
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
+          <circle cx="12" cy="9" r="2.5" />
         </svg>
       ),
-      text: "Inaruwa- Sunsari, Nepal",
+      title: "location",
+      text: "Inaruwa, Sunsari — Nepal",
     },
   ];
 
@@ -46,271 +43,125 @@ export default function AboutSection() {
     const rect = card.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    const rotateX = ((y - rect.height / 2) / rect.height) * -12;
-    const rotateY = ((x - rect.width / 2) / rect.width) * 12;
-    card.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`;
+    const rotateX = ((y - rect.height / 2) / rect.height) * -8;
+    const rotateY = ((x - rect.width / 2) / rect.width) * 8;
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
   };
 
   const handlePhotoMouseLeave = () => {
     const card = photoCardRef.current;
     if (!card) return;
-    card.style.transform = "perspective(900px) rotateX(0deg) rotateY(0deg) scale(1)";
+    card.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg)";
   };
 
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600;700;800;900&display=swap');
-
-        .about-section {
-          padding: 44px 48px;
-          background: #f8fafc;
-          font-family: 'Inter', sans-serif;
-          width: 100%;
-          box-sizing: border-box;
-        }
-
-        .about-separator {
-          width: 100%;
-          height: 1px;
-          background: linear-gradient(to right, transparent, #cbd5e1, transparent);
-          margin-bottom: 60px;
-        }
-
-        /* Full width — no max-width cap */
-        .about-inner {
-          width: 100%;
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 48px;
-          align-items: center;
-        }
-
-        /* LEFT */
-        .about-content {
-          display: flex;
-          flex-direction: column;
-          gap: 1.6rem;
-          justify-content: center;
-        }
-
-        .about-title-wrap {
-          display: flex;
-          flex-direction: column;
-          gap: 6px;
-          align-items: flex-start;
-        }
-
-        .about-title {
-          font-size: clamp(2.5rem, 4vw, 3.5rem);
-          font-weight: 900;
-          color: #0f172a;
-          line-height: 1.05;
-          margin: 0;
-        }
-
-        .about-title span {
-          color: #4f6ef7;
-        }
-
-        .about-subline {
-          font-size: 13px;
-          font-weight: 700;
-          letter-spacing: 0.15em;
-          text-transform: uppercase;
-          color: #4f6ef7;
-        }
-
-        .about-bio {
-          font-size: 1rem;
-          line-height: 1.85;
-          color: #475569;
-          font-weight: 500;
-          background: #fff;
-          border-radius: 0 12px 12px 0;
-          padding: 1.25rem 1.25rem 1.25rem 1.5rem;
-          border: 1px solid #e2e8f0;
-          border-left: 3px solid #4f6ef7;
-          margin: 0;
-        }
-
-        /* HIGHLIGHTS */
-        .highlights {
-          display: flex;
-          flex-direction: column;
-          gap: 0.6rem;
-        }
-
-        .highlight-item {
-          display: flex;
-          align-items: center;
-          gap: 0.85rem;
-          padding: 0.75rem 1rem;
-          border-radius: 10px;
-          background: #ffffff;
-          border: 1px solid #e2e8f0;
-          font-size: 0.9rem;
-          font-weight: 600;
-          color: #0f172a;
-          transition: all 0.2s ease;
-        }
-
-        .highlight-item:hover {
-          border-color: #4f6ef7;
-          background: #f0f4ff;
-          transform: translateX(4px);
-        }
-
-        .highlight-icon {
-          width: 18px;
-          height: 18px;
-          color: #4f6ef7;
-          display: flex;
-          flex-shrink: 0;
-        }
-
-        .highlight-icon svg {
-          width: 18px;
-          height: 18px;
-        }
-
-        /* STATS */
-        .stats-row {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 1rem;
-          padding-top: 0.5rem;
-          border-top: 1px solid #e2e8f0;
-        }
-
-        .stat-card {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 4px;
-          padding: 1rem;
-          background: #ffffff;
-          border: 1px solid #e2e8f0;
-          border-radius: 14px;
-          transition: all 0.2s ease;
-        }
-
-        .stat-card:hover {
-          border-color: #4f6ef7;
-          transform: translateY(-3px);
-        }
-
-        .stat-value {
-          font-size: 1.75rem;
-          font-weight: 900;
-          color: #0f172a;
-        }
-
-        .stat-label {
-          font-size: 0.7rem;
-          font-weight: 700;
-          color: #94a3b8;
-          text-transform: uppercase;
-          text-align: center;
-        }
-
-        /* PHOTO */
-        .photo-wrap {
+        .about { border-top: 1px solid rgba(148,163,184,.1); background: linear-gradient(180deg, rgba(255,255,255,.012), transparent 30%); }
+        .about-grid { display: grid; grid-template-columns: 1fr 380px; gap: 56px; align-items: center; margin-top: 44px; }
+        .bio-card {
+          background: linear-gradient(180deg, rgba(255,255,255,.03), transparent), #0d1424;
+          border: 1px solid rgba(148,163,184,.13);
+          border-radius: 16px;
+          padding: 26px;
           position: relative;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        .photo-card {
-          width: 100%;
-          max-width: 480px;
-          aspect-ratio: 4/5;
-          border-radius: 20px;
           overflow: hidden;
-          border: 1px solid #e2e8f0;
-          background: #fff;
-          box-shadow: 0 24px 60px rgba(79, 110, 247, 0.1);
-          transition: transform 0.15s ease-out;
         }
-
-        .photo-card img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          object-position: center top;
+        .bio-card::before { content:""; position:absolute; left:0; top:0; bottom:0; width:3px; background: linear-gradient(180deg, var(--accent), var(--accent-2)); }
+        .bio-card p { font-size: .99rem; line-height: 1.8; color: #9aa8c0; }
+        .bio-card p + p { margin-top: 14px; }
+        .bio-card b { color: #e8eef7; font-weight: 600; }
+        .hl-list { display:flex; flex-direction:column; gap: 10px; margin-top: 18px; }
+        .hl {
+          display:flex; align-items:center; gap:14px;
+          background: rgba(255,255,255,.02);
+          border: 1px solid rgba(148,163,184,.12);
+          border-radius: 12px;
+          padding: 13px 15px;
+          transition: all .2s;
         }
-
-        @media (max-width: 1100px) {
-          .about-section { padding: 40px 24px; }
-          .about-inner { grid-template-columns: 1fr; gap: 32px; }
-          .photo-wrap { order: -1; }
-          .photo-card { max-width: 360px; }
+        .hl:hover { border-color: rgba(0,229,160,.4); background: rgba(0,229,160,.05); transform: translateX(5px); }
+        .hl-ic { width: 38px; height: 38px; border-radius: 10px; display:grid; place-items:center; background: rgba(0,229,160,.1); border: 1px solid rgba(0,229,160,.22); color: var(--accent); flex-shrink:0; }
+        .hl-ic svg { width: 18px; height: 18px; }
+        .hl small { display:block; font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing:.06em; }
+        .hl span { font-size: .9rem; font-weight: 600; color: #dbe3ef; }
+        .photo-frame { position: relative; }
+        .photo-frame::before { content:""; position:absolute; inset: 16px -14px -14px 16px; border:1px solid rgba(0,229,160,.25); border-radius:20px; z-index:0; }
+        .photo-card {
+          position:relative; z-index:1;
+          border-radius: 18px; overflow:hidden;
+          border: 1px solid rgba(148,163,184,.18);
+          background:#0d1424;
+          aspect-ratio: 4/5;
+          transition: transform .18s ease;
+          box-shadow: 0 30px 70px rgba(0,0,0,.5);
         }
-
-        @media (max-width: 768px) {
-          .about-section { padding: 32px 16px; }
-          .stats-row { gap: 0.6rem; }
-          .stat-value { font-size: 1.4rem; }
+        .photo-card img { width:100%; height:100%; object-fit:cover; object-position:center top; filter: saturate(1.02) contrast(1.03); }
+        .photo-badge {
+          position:absolute; z-index:2; left:18px; bottom:18px; right:18px;
+          display:flex; align-items:center; justify-content:space-between;
+          background: rgba(5,7,13,.78); backdrop-filter: blur(12px);
+          border:1px solid rgba(148,163,184,.16); border-radius:12px; padding:12px 14px;
         }
+        .photo-badge b { color:#fff; font-size:.88rem; display:block; }
+        .photo-badge small { font-family:var(--mono); font-size:11px; color:var(--accent); }
+        .photo-badge .dot-live { width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent); }
+        @media (max-width: 980px) { .about-grid { grid-template-columns: 1fr; } .photo-frame { max-width: 380px; margin: 0 auto; width:100%; } }
       `}</style>
 
-      <section id="about" className="about-section">
+      <section id="about" className="about">
+        <div className="section-shell">
+          <span className="section-kicker">{"// 02. about"}</span>
+          <h2 className="section-title" style={{ marginTop: 18 }}>
+            About <span className="accent">Me</span>
+          </h2>
+          <p className="section-desc" style={{ marginTop: 12 }}>
+            <span className="mono" style={{ color: "var(--accent)" }}>$</span> cat about.txt — a developer who
+            learns fast, builds clean, and optimizes for real users.
+          </p>
 
-        <div className="about-separator" />
+          <div className="about-grid">
+            <div>
+              <div className="bio-card">
+                <p>
+                  I&apos;m <b>Pratha Bhattarai</b>, a <b>Full Stack Developer</b> pursuing{" "}
+                  <b>BSc (Hons) Computing</b>. I&apos;m currently working part-time as a{" "}
+                  <b>Frontend Developer at Bardali Creation Pvt. Ltd.</b>, building responsive,
+                  user-friendly web interfaces.
+                </p>
+                <p>
+                  I work across the stack with <b>React, Node.js & MySQL</b> — from pixel-perfect
+                  frontend to clean APIs. My goal: ship products that are fast, accessible,
+                  and delightful.
+                </p>
+              </div>
 
-        <div className="about-inner">
-
-          {/* LEFT */}
-          <div className="about-content">
-            <div className="about-title-wrap">
-              <div className="about-subline">Who I Am</div>
-              <h2 className="about-title">
-                About <span>Me</span>
-              </h2>
+              <div className="hl-list">
+                {highlights.map((h, i) => (
+                  <div className="hl" key={i}>
+                    <span className="hl-ic">{h.icon}</span>
+                    <div>
+                      <small>${h.title}</small>
+                      <span>{h.text}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <p className="about-bio">
-      
-My name is Pratha Bhattarai, and I am currently pursuing a Bachelor’s degree in BSc (Hons) Computing. I am an aspiring Frontend Developer with a strong interest in SEO and creating modern, user-friendly web experiences.
-
-I enjoy designing and developing responsive websites, optimizing them for better performance and search visibility, and continuously learning new technologies to enhance my skills.
-
-
-
-            </p>
-
-            <div className="highlights">
-              {highlights.map((h, i) => (
-                <div className="highlight-item" key={i}>
-                  <span className="highlight-icon">{h.icon}</span>
-                  {h.text}
+            <div className="photo-frame">
+              <div className="photo-card" ref={photoCardRef} onMouseMove={handlePhotoMouseMove} onMouseLeave={handlePhotoMouseLeave}>
+                <img src={profileImage} alt="Pratha Bhattarai" />
+                <div className="photo-badge">
+                  <div>
+                    <b>Pratha Bhattarai</b>
+                    <small>~/inaruwa — nepal</small>
+                  </div>
+                  <span className="dot-live" />
                 </div>
-              ))}
-            </div>
-
-            <div className="stats-row">
-              {stats.map((s, i) => (
-                <div className="stat-card" key={i}>
-                  <span className="stat-value">{s.value}</span>
-                  <span className="stat-label">{s.label}</span>
-                </div>
-              ))}
+              </div>
             </div>
           </div>
-
-          {/* RIGHT */}
-          <div className="photo-wrap">
-            <div
-              className="photo-card"
-              ref={photoCardRef}
-              onMouseMove={handlePhotoMouseMove}
-              onMouseLeave={handlePhotoMouseLeave}
-            >
-              <img src={profileImage} alt="Pratha Bhattarai" />
-            </div>
-          </div>
-
         </div>
       </section>
     </>
